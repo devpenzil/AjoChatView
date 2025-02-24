@@ -29,7 +29,7 @@ public class SingleMessage: UICollectionViewCell{
         NSLayoutConstraint.activate([
             bubbleView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             bubbleView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            bubbleView.widthAnchor.constraint(lessThanOrEqualToConstant: 250),
+            bubbleView.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width * 0.8),
                    
             messageLabel.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 10),
             messageLabel.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: -10),

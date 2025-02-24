@@ -13,7 +13,6 @@ public struct Message {
     }
 }
 
-
 public class AjoChatView:UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource{
     public var messages : [Message] = []
     
@@ -44,3 +43,4 @@ public class AjoChatView:UICollectionView, UICollectionViewDelegate, UICollectio
         return cell
     }
 }
+
