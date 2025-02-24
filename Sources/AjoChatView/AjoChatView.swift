@@ -3,7 +3,7 @@
 
 import UIKit
 
-class ChatView:UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource{
+public class ChatView:UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource{
     var messages : [Message] = []
     
     init(frame: CGRect) {
@@ -23,11 +23,11 @@ class ChatView:UICollectionView, UICollectionViewDelegate, UICollectionViewDataS
         }
         
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SingleMessage
                cell.configure(with: messages[indexPath.item])
         return cell
