@@ -3,7 +3,7 @@
 
 import UIKit
 
-public class ChatView:UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource{
+public class AjoChatView:UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource{
     var messages : [Message] = []
     
     init(frame: CGRect) {
