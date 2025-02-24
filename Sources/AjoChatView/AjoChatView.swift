@@ -3,9 +3,14 @@
 
 import UIKit
 
-public struct Message{
-    let text: String
-    let incoming: Bool
+public struct Message {
+    public let text: String
+    public let incoming: Bool
+    
+    public init(text: String, incoming: Bool) {
+        self.text = text
+        self.incoming = incoming
+    }
 }
 
 

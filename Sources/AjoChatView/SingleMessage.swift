@@ -7,11 +7,11 @@
 
 import UIKit
 
-class SingleMessage: UICollectionViewCell{
-    let messageLabel = UILabel()
-    let bubbleView = UIView()
+public class SingleMessage: UICollectionViewCell{
+    public let messageLabel = UILabel()
+    public let bubbleView = UIView()
     
-    override init(frame: CGRect){
+    public override init(frame: CGRect){
         super.init(frame: frame)
         
         bubbleView.layer.cornerRadius = 15
@@ -43,7 +43,7 @@ class SingleMessage: UICollectionViewCell{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with message: Message) {
+    public func configure(with message: Message) {
            messageLabel.text = message.text
            bubbleView.backgroundColor = message.incoming ? .lightGray : .blue
            messageLabel.textColor = message.incoming ? .black : .white
