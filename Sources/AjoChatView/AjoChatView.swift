@@ -4,7 +4,7 @@
 import UIKit
 
 public class AjoChatView:UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource{
-    var messages : [Message] = []
+    public var messages : [Message] = []
     
     public init(frame: CGRect) {
             let layout = UICollectionViewFlowLayout()

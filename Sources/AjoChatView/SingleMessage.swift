@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Message{
+public struct Message{
     let text: String
     let incoming: Bool
 }
