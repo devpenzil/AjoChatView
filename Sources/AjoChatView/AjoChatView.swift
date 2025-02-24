@@ -3,6 +3,12 @@
 
 import UIKit
 
+public struct Message{
+    let text: String
+    let incoming: Bool
+}
+
+
 public class AjoChatView:UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource{
     public var messages : [Message] = []
     

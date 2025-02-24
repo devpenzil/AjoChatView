@@ -7,11 +7,6 @@
 
 import UIKit
 
-public struct Message{
-    let text: String
-    let incoming: Bool
-}
-
 class SingleMessage: UICollectionViewCell{
     let messageLabel = UILabel()
     let bubbleView = UIView()
