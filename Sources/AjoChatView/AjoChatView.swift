@@ -6,7 +6,7 @@ import UIKit
 public class AjoChatView:UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource{
     var messages : [Message] = []
     
-    init(frame: CGRect) {
+    public init(frame: CGRect) {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
             layout.estimatedItemSize = CGSize(width: frame.width, height: 50)
