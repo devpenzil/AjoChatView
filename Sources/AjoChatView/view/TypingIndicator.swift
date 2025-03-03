@@ -30,7 +30,7 @@ public class TypingIndicatorCell: UICollectionViewCell {
     }
 
     func configure(with theme: chatUiTheme) {
-        label.textColor = theme.RecieveMessageTextColor // Or some custom typing color
+        label.textColor = theme.RecieveMessageTextColor
         contentView.backgroundColor = theme.RecieveMessageTextColor.withAlphaComponent(0.5)
     }
 }

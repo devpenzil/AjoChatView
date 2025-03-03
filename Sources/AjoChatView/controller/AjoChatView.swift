@@ -33,23 +33,14 @@ public class AjoChatView:UICollectionView, UICollectionViewDelegate, UICollectio
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if isTyping && indexPath.item == messages.count {
-            // Last cell is the typing indicator
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TypingIndicatorCell", for: indexPath) as! TypingIndicatorCell
             cell.configure(with: theme)
             return cell
         } else {
-            // Normal message cell
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SingleMessage
             cell.configure(with: messages[indexPath.item], with: theme)
             return cell
         }
     }
-
-    
-//    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SingleMessage
-//        cell.configure(with: messages[indexPath.item], with: theme)
-//        return cell
-//    }
 }
 
