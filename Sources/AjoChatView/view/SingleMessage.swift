@@ -43,10 +43,10 @@ public class SingleMessage: UICollectionViewCell{
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(with message: Message) {
+    public func configure(with message: Message, with theme: chatUiTheme) {
            messageLabel.text = message.text
-           bubbleView.backgroundColor = message.incoming ? .lightGray : .blue
-           messageLabel.textColor = message.incoming ? .black : .white
+        bubbleView.backgroundColor = message.incoming ? theme.RecieveMessageCellColor : theme.sentMessageCellColor
+        messageLabel.textColor = message.incoming ? theme.RecieveMessageTextColor : theme.sentMessageTextColor
            
            if message.incoming {
                bubbleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
