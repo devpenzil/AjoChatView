@@ -1,5 +1,5 @@
 
-# AjoChatView
-Simple chat view swift package
+# ChatView-POC
+Chat view swift package
 
 

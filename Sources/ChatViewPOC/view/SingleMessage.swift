@@ -25,12 +25,12 @@ public class SingleMessage: UICollectionViewCell{
         
         bubbleView.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
-               
+        
         NSLayoutConstraint.activate([
             bubbleView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             bubbleView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
             bubbleView.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width * 0.8),
-                   
+            
             messageLabel.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 10),
             messageLabel.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: -10),
             messageLabel.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 10),
@@ -44,16 +44,16 @@ public class SingleMessage: UICollectionViewCell{
     }
     
     public func configure(with message: Message, with theme: chatUiTheme) {
-           messageLabel.text = message.text
+        messageLabel.text = message.text
         bubbleView.backgroundColor = message.incoming ? theme.RecieveMessageCellColor : theme.sentMessageCellColor
         messageLabel.textColor = message.incoming ? theme.RecieveMessageTextColor : theme.sentMessageTextColor
-           
-           if message.incoming {
-               bubbleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
-               bubbleView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -60).isActive = true
-           } else {
-               bubbleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
-               bubbleView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 60).isActive = true
-           }
-       }
+        
+        if message.incoming {
+            bubbleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
+            bubbleView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -60).isActive = true
+        } else {
+            bubbleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+            bubbleView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 60).isActive = true
+        }
+    }
 }
