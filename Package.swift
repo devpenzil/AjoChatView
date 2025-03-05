@@ -9,16 +9,18 @@ let package = Package(
         .iOS(.v17)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "ChatViewPOC",
-            targets: ["ChatViewPOC"]),
+            targets: ["ChatViewPOC"]
+        ),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ChatViewPOC"),
-
+            name: "ChatViewPOC"
+//            resources: [
+//                .process("Resources") // 👈 This is what add images to the package bundle!
+//            ]
+        )
     ]
 )
+

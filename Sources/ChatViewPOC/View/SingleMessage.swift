@@ -16,6 +16,7 @@ public class SingleMessage: UICollectionViewCell{
         
         bubbleView.layer.cornerRadius = 15
         bubbleView.clipsToBounds = true
+
         addSubview(bubbleView)
         
         messageLabel.numberOfLines = 0
@@ -36,22 +37,24 @@ public class SingleMessage: UICollectionViewCell{
             messageLabel.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 10),
             messageLabel.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: -10),
         ])
-        
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(with message: Message, with theme: chatUiTheme) {
+    public func configure(with message: Message, with theme: chatUITheme) {
         messageLabel.text = message.text
-        bubbleView.backgroundColor = message.incoming ? theme.RecieveMessageCellColor : theme.sentMessageCellColor
-        messageLabel.textColor = message.incoming ? theme.RecieveMessageTextColor : theme.sentMessageTextColor
+        bubbleView.backgroundColor = message.incoming ? theme.recieveMessageCellColor : theme.sentMessageCellColor
+        messageLabel.textColor = message.incoming ? theme.recieveMessageTextColor  : theme.sentMessageTextColor 
+    
         
         if message.incoming {
+            bubbleView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+           
             bubbleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
             bubbleView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -60).isActive = true
         } else {
+            bubbleView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMinXMaxYCorner]
             bubbleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
             bubbleView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 60).isActive = true
         }
