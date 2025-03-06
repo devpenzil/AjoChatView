@@ -3,21 +3,21 @@
 
 import UIKit
 
-public class ChatViewPOC:UIViewController, UICollectionViewDataSource{
-    //    public var messages : [Message] = []
+public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
     public var chatViewModel: ChatViewModel
-    public var isTyping : Bool = false
-    public var theme : chatUITheme
+    public var isTyping: Bool = false
+    public var theme: chatUITheme
     private var collectionView: UICollectionView!
     private var chatDelegate: ChatViewDelegate
     
-    fileprivate func setupColectionView() {
+    fileprivate func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.estimatedItemSize = CGSize(width: self.view.frame.width, height: 50)
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.register(SingleMessage.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(SingleMessageSender.self, forCellWithReuseIdentifier: "SenderCell")
         collectionView.register(TypingIndicatorCell.self, forCellWithReuseIdentifier: "TypingIndicatorCell")
         collectionView.backgroundColor = theme.chatViewBackgroundColor
         view.addSubview(collectionView)
@@ -28,66 +28,62 @@ public class ChatViewPOC:UIViewController, UICollectionViewDataSource{
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        
     }
     
-    public init(theme:chatUITheme, viewModel: ChatViewModel, chatDelegate: ChatViewDelegate) {
+    public init(theme: chatUITheme, viewModel: ChatViewModel, chatDelegate: ChatViewDelegate) {
         self.theme = theme
         self.chatViewModel = viewModel
         self.chatDelegate = chatDelegate
         super.init(nibName: nil, bundle: nil)
-        setupColectionView()
-        
+        setupCollectionView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return chatViewModel.messages.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if chatViewModel.messages[indexPath.row].text == "Typing"{
+        if chatViewModel.messages[indexPath.row].text == "Typing" {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TypingIndicatorCell", for: indexPath) as! TypingIndicatorCell
             cell.configure(with: theme)
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SingleMessage
-            cell.configure(with: chatViewModel.messages[indexPath.row], with: theme)
-            return cell
+            if chatViewModel.messages[indexPath.row].incoming == true{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SingleMessage
+                cell.configure(with: chatViewModel.messages[indexPath.row], with: theme)
+                return cell}
+            else{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SenderCell", for: indexPath) as! SingleMessageSender
+                cell.configure(with: chatViewModel.messages[indexPath.row], with: theme)
+                return cell
+                
+            }
         }
     }
-
-        
+    
     public func scrollToBottom() {
         guard let indexPath = getLastItemIndexPath() else { return }
         collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
     
-    public func addSenderMessage(content: String){
+    public func addSenderMessage(content: String) {
         chatViewModel.addMessage(Message(text: content, incoming: false))
-        guard let indexPath = getLastItemIndexPath() else { return }
-        collectionView.insertItems(at: [indexPath])
-      scrollToBottom()
+        performBatchUpdates()
     }
     
-    public func addRecieverMessage(content: String){
+    public func addReceiverMessage(content: String) {
         chatViewModel.addMessage(Message(text: content, incoming: true))
-        guard let indexPath = getLastItemIndexPath() else { return }
-        collectionView.insertItems(at: [indexPath])
-      scrollToBottom()
-        
+        performBatchUpdates()
     }
     
     public func showTypingIndicator(_ isTyping: Bool) {
         self.isTyping = isTyping
         chatViewModel.addMessage(Message(text: "Typing", incoming: true))
-        guard let indexPath = getLastItemIndexPath() else { return }
-        collectionView.insertItems(at: [indexPath])
-        scrollToBottom()
+        performBatchUpdates()
         chatDelegate.didShowTypingIndicator(isTyping)
     }
     
@@ -96,6 +92,14 @@ public class ChatViewPOC:UIViewController, UICollectionViewDataSource{
         guard lastItem >= 0 else { return nil }
         return IndexPath(item: lastItem, section: 0)
     }
-
+    
+    private func performBatchUpdates() {
+        guard let indexPath = getLastItemIndexPath() else { return }
+        collectionView.performBatchUpdates({
+            collectionView.insertItems(at: [indexPath])
+        }, completion: { _ in
+            self.scrollToBottom()
+        })
+    }
 }
 
