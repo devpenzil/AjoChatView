@@ -16,13 +16,15 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
         layout.estimatedItemSize = CGSize(width: self.view.frame.width, height: 50)
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
-        collectionView.register(SingleMessage.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(SingleMessage.self, forCellWithReuseIdentifier: "RecieverCell")
         collectionView.register(SingleMessageSender.self, forCellWithReuseIdentifier: "SenderCell")
         collectionView.register(TypingIndicatorCell.self, forCellWithReuseIdentifier: "TypingIndicatorCell")
+        collectionView.register(AnimatedLastRecieverMessage.self, forCellWithReuseIdentifier: "AnimatedCell")
         collectionView.backgroundColor = theme.chatViewBackgroundColor
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -52,8 +54,14 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
             cell.configure(with: theme)
             return cell
         } else {
-            if chatViewModel.messages[indexPath.row].incoming == true{
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SingleMessage
+            let isLastItem = indexPath.row == chatViewModel.messages.count - 1
+            
+            if !isLastItem && chatViewModel.messages[indexPath.row].incoming == true  {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnimatedCell", for: indexPath) as! AnimatedLastRecieverMessage
+                cell.configure(with: chatViewModel.messages[indexPath.row], with: theme)
+                return cell
+            }else if chatViewModel.messages[indexPath.row].incoming == true{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecieverCell", for: indexPath) as! SingleMessage
                 cell.configure(with: chatViewModel.messages[indexPath.row], with: theme)
                 return cell}
             else{
@@ -68,6 +76,11 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
     public func scrollToBottom() {
         guard let indexPath = getLastItemIndexPath() else { return }
         collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+    }
+    
+    public func addLastIncomingMessage(content: String) {
+        chatViewModel.addMessage(Message(text: content, incoming: true))
+        performBatchUpdates()
     }
     
     public func addSenderMessage(content: String) {
@@ -100,6 +113,12 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
         }, completion: { _ in
             self.scrollToBottom()
         })
+    }
+    
+    public func updateMessage(at index: Int, with newText: String) {
+        chatViewModel.updateMessage(at: index, with: newText)
+        let indexPath = IndexPath(item: index, section: 0)
+        collectionView.reloadItems(at: [indexPath])
     }
 }
 

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public struct Message {
-    public let text: String
+    public var text: String
     public let incoming: Bool
     
     public init(text: String, incoming: Bool) {

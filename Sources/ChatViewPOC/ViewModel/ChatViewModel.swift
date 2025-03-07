@@ -19,4 +19,9 @@ public final class ChatViewModel: ChatViewModelProtocol {
     public func addMessage(_ message: Message) {
         messages.append(message)
     }
+    
+    public func updateMessage(at index: Int, with newText: String) {
+        guard index < messages.count else { return }
+        messages[index].text = newText
+    }
 }
