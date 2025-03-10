@@ -81,21 +81,22 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
         collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
     
-    public func addLastIncomingMessage(content: String) {
-        chatViewModel.addMessage(Message(text: content, incoming: true))
-        performBatchUpdates()
-    }
-    
+    /// Add a new sender message
+    /// - Parameter content: Message string
     public func addSenderMessage(content: String) {
         chatViewModel.addMessage(Message(text: content, incoming: false))
         performBatchUpdates()
     }
     
+    /// Add a new reciever message
+    /// - Parameter content: Message string
     public func addReceiverMessage(content: String) {
         chatViewModel.addMessage(Message(text: content, incoming: true))
         performBatchUpdates()
     }
     
+    /// Cotrol typing indicator from sender side
+    /// - Parameter isTyping: Boolean indicates the sender typing or not
     public func showTypingIndicator(_ isTyping: Bool) {
         self.isTyping = isTyping
         chatViewModel.addMessage(Message(text: "Typing", incoming: true))
@@ -118,9 +119,21 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
         })
     }
     
+    /// Update any message in ChatViewModel
+    /// - Parameters:
+    ///   - index: Position of updating message
+    ///   - newText: Updating messaging string
     public func updateMessage(at index: Int, with newText: String) {
         chatViewModel.updateMessage(at: index, with: newText)
         let indexPath = IndexPath(item: index, section: 0)
+        collectionView.reloadItems(at: [indexPath])
+    }
+    
+    /// Update last message of ChatViewModel
+    /// - Parameter newText: New message string
+    public func updateLastMessage(with newText: String) {
+        guard let indexPath = getLastItemIndexPath() else { return }
+        chatViewModel.updateMessage(at: indexPath.item, with: newText)
         collectionView.reloadItems(at: [indexPath])
     }
 }

@@ -52,6 +52,8 @@ public class SingleMessage: UICollectionViewCell{
         messageLabel.textColor = message.incoming ? theme.recieveMessageTextColor  : theme.sentMessageTextColor
     }
 }
+
+
 public class SingleMessageSender: UICollectionViewCell{
     public let messageLabel = UILabel()
     public let bubbleView = UIView()
