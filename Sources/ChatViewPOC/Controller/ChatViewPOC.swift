@@ -7,6 +7,8 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
     public var chatViewModel: ChatViewModel
     public var isTyping: Bool = false
     public var theme: chatUITheme
+    public var animatedEntry: Bool = false
+    
     private var collectionView: UICollectionView!
     private var chatDelegate: ChatViewDelegate
     
@@ -32,10 +34,11 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
         ])
     }
     
-    public init(theme: chatUITheme, viewModel: ChatViewModel, chatDelegate: ChatViewDelegate) {
+    public init(theme: chatUITheme, viewModel: ChatViewModel, chatDelegate: ChatViewDelegate, animatedEntry: Bool) {
         self.theme = theme
         self.chatViewModel = viewModel
         self.chatDelegate = chatDelegate
+        self.animatedEntry = animatedEntry
         super.init(nibName: nil, bundle: nil)
         setupCollectionView()
     }
@@ -56,7 +59,7 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
         } else {
             let isLastItem = indexPath.row == chatViewModel.messages.count - 1
             
-            if !isLastItem && chatViewModel.messages[indexPath.row].incoming == true  {
+            if !isLastItem && chatViewModel.messages[indexPath.row].incoming == true && animatedEntry {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnimatedCell", for: indexPath) as! AnimatedLastRecieverMessage
                 cell.configure(with: chatViewModel.messages[indexPath.row], with: theme)
                 return cell
