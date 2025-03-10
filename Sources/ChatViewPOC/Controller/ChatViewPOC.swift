@@ -3,6 +3,12 @@
 
 import UIKit
 
+/// `ChatViewPOC` is a `UIViewController` subclass that manages a chat interface using a `UICollectionView`. It supports displaying messages, typing indicators, and animated entries for the last received message.
+/// - Parameters:
+///   - chatViewModel: The view model that manages the chat messages.
+///   - isTyping: A Boolean value indicating whether the user is typing.
+///   - theme: The visual style of the chat.
+///   - animatedEntry: A Boolean value indicating whether the last received message should be animated.
 public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
     public var chatViewModel: ChatViewModel
     public var isTyping: Bool = false
@@ -95,7 +101,7 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
         performBatchUpdates()
     }
     
-    /// Cotrol typing indicator from sender side
+    /// Control typing indicator from sender side
     /// - Parameter isTyping: Boolean indicates the sender typing or not
     public func showTypingIndicator(_ isTyping: Bool) {
         self.isTyping = isTyping
@@ -122,7 +128,7 @@ public class ChatViewPOC: UIViewController, UICollectionViewDataSource {
     /// Update any message in ChatViewModel
     /// - Parameters:
     ///   - index: Position of updating message
-    ///   - newText: Updating messaging string
+    ///   - newText: Updating message string
     public func updateMessage(at index: Int, with newText: String) {
         chatViewModel.updateMessage(at: index, with: newText)
         let indexPath = IndexPath(item: index, section: 0)

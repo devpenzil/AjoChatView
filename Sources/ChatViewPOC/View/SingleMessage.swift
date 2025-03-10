@@ -143,7 +143,11 @@ public class AnimatedLastRecieverMessage: UICollectionViewCell{
         bubbleView.backgroundColor = message.incoming ? theme.recieveMessageCellColor : theme.sentMessageCellColor
         messageLabel.textColor = message.incoming ? theme.recieveMessageTextColor  : theme.sentMessageTextColor
     }
-    
+        
+    /// Animates the display of a message by revealing each character with a slight delay.
+    /// - Parameters:
+    ///   - message: The message string to be animated.
+    ///   - messageLabel: The `UILabel` where the animated message will be displayed.
     func animateMessageLabel(message: String, messageLabel: UILabel) {
         var words = ""
         Task {

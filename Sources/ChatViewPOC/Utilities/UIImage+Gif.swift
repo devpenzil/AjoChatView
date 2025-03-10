@@ -21,19 +21,24 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-
+/// This file contains an extension for the `UIImage` class, providing methods to handle GIF images. It includes functions to create an animated `UIImage` from GIF data or a GIF file name, and utility functions to manage GIF properties.
 extension UIImage {
     
+    /// Creates an animated UIImage from GIF data.
+    /// - Parameter data: The GIF image data.
+    /// - Returns: An optional UIImage representing the animated GIF, or nil if the operation fails.
     public class func gifImageWithData(_ data: Data) -> UIImage? {
         guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
             print("image doesn't exist")
             return nil
         }
-        
         return UIImage.animatedImageWithSource(source)
     }
     
     
+    /// Creates an animated UIImage from GIF name.
+    /// - Parameter name: The GIF image name.
+    /// - Returns: An optional UIImage representing the animated GIF, or nil if the operation fails.
     public class func gifImageWithName(_ name: String) -> UIImage? {
         guard let bundleURL = Bundle.main
             .url(forResource: name, withExtension: "gif") else {
